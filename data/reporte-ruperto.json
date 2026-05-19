@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-05-19T09:03:47.245Z",
+  "registros": [
+    {
+      "id": "241ccccf-fe24-45a9-848a-653b1d1cda98",
+      "persona": "Ruperto",
+      "respuestas": {
+        "banaste": "Sí",
+        "pisaste": "No"
+      },
+      "fecha": "19/05/2026",
+      "hora": "03:03:47 a. m.",
+      "zonaHoraria": "America/Tegucigalpa",
+      "creadoISO": "2026-05-19T09:03:47.245Z"
+    }
+  ]
+}
