@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Codebeautify.org Text to HTML Converter</title>
+	</head>
+	<body>
+		<p>
+			<!DOCTYPE html>
+			<html lang="es">
+				<head>
+					<meta charset="UTF-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+					<title>Reporte Ruperto / Ruperta</title>
+					<style> 
+    :root { 
+      --bg: #0f172a; 
+      --card: #111c33; 
+      --card2: #15223d; 
+      --text: #f8fafc; 
+      --muted: #94a3b8; 
+      --green: #22c55e; 
+      --red: #ef4444; 
+      --blue: #38bdf8; 
+      --yellow: #facc15; 
+      --border: rgba(255,255,255,.12); 
+      --shadow: 0 20px 50px rgba(0,0,0,.35); 
+      --radius: 22px; 
+    } 
+ 
+    * { box-sizing: border-box; } 
+ 
+    body { 
+      margin: 0; 
+      min-height: 100vh; 
+      font-family: Arial, sans-serif; 
+      background: 
+        radial-gradient(circle at top left, rgba(56,189,248,.22), transparent 35%), 
+        radial-gradient(circle at bottom right, rgba(34,197,94,.16), transparent 35%), 
+        var(--bg); 
+      color: var(--text); 
+      padding: 18px; 
+    } 
+ 
+    .app { 
+      width: 100%; 
+      max-width: 900px; 
+      margin: auto; 
+    } 
+ 
+    .header { 
+      text-align: center; 
+      margin-bottom: 18px; 
+    } 
+ 
+    .header h1 { 
+      margin: 0; 
+      font-size: clamp(26px, 5vw, 42px); 
+    } 
+ 
+    .header p { 
+      margin: 8px 0 0; 
+      color: var(--muted); 
+      font-size: 15px; 
+    } 
+ 
+    .card { 
+      background: linear-gradient(180deg, var(--card), var(--card2)); 
+      border: 1px solid var(--border); 
+      border-radius: var(--radius); 
+      padding: 18px; 
+      box-shadow: var(--shadow); 
+      margin-bottom: 16px; 
+    } 
+ 
+    .config-grid { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 10px; 
+    } 
+ 
+    label { 
+      font-size: 13px; 
+      color: var(--muted); 
+      display: block; 
+      margin-bottom: 6px; 
+    } 
+ 
+    input, select { 
+      width: 100%; 
+      border: 1px solid var(--border); 
+      background: rgba(15,23,42,.78); 
+      color: var(--text); 
+      border-radius: 14px; 
+      padding: 12px; 
+      outline: none; 
+      font-size: 15px; 
+    } 
+ 
+    input:focus, select:focus { 
+      border-color: var(--blue); 
+    } 
+ 
+    .token-row { 
+      margin-top: 10px; 
+    } 
+ 
+    .warning { 
+      margin-top: 10px; 
+      padding: 10px 12px; 
+      border-radius: 14px; 
+      background: rgba(250,204,21,.11); 
+      border: 1px solid rgba(250,204,21,.28); 
+      color: #fde68a; 
+      font-size: 13px; 
+      line-height: 1.35; 
+    } 
+ 
+    .question { 
+      text-align: center; 
+      margin: 8px 0 15px; 
+      font-size: clamp(23px, 4vw, 34px); 
+      font-weight: 900; 
+    } 
+ 
+    .btn-grid { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 12px; 
+      margin-bottom: 14px; 
+    } 
+ 
+    button { 
+      border: 0; 
+      border-radius: 18px; 
+      padding: 15px; 
+      font-size: 17px; 
+      font-weight: 800; 
+      cursor: pointer; 
+      color: white; 
+      transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease; 
+    } 
+ 
+    button:active { 
+      transform: scale(.97); 
+    } 
+ 
+    button:disabled { 
+      opacity: .45; 
+      cursor: not-allowed; 
+    } 
+ 
+    .btn-person { 
+      background: linear-gradient(135deg, #2563eb, #06b6d4); 
+    } 
+ 
+    .btn-yes { 
+      background: linear-gradient(135deg, #16a34a, #22c55e); 
+    } 
+ 
+    .btn-no { 
+      background: linear-gradient(135deg, #dc2626, #ef4444); 
+    } 
+ 
+    .btn-main { 
+      width: 100%; 
+      background: linear-gradient(135deg, #7c3aed, #2563eb); 
+      box-shadow: 0 12px 25px rgba(37,99,235,.25); 
+      margin-top: 8px; 
+    } 
+ 
+    .btn-secondary { 
+      width: 100%; 
+      background: rgba(148,163,184,.18); 
+      border: 1px solid var(--border); 
+      color: var(--text); 
+      margin-top: 8px; 
+    } 
+ 
+    .selected { 
+      outline: 3px solid white; 
+      box-shadow: 0 0 0 5px rgba(255,255,255,.18); 
+    } 
+ 
+    .status { 
+      margin-top: 12px; 
+      padding: 12px; 
+      border-radius: 14px; 
+      background: rgba(56,189,248,.10); 
+      border: 1px solid rgba(56,189,248,.25); 
+      color: #bae6fd; 
+      font-size: 14px; 
+      display: none; 
+    } 
+ 
+    .status.error { 
+      background: rgba(239,68,68,.10); 
+      border-color: rgba(239,68,68,.30); 
+      color: #fecaca; 
+    } 
+ 
+    .status.ok { 
+      background: rgba(34,197,94,.10); 
+      border-color: rgba(34,197,94,.30); 
+      color: #bbf7d0; 
+    } 
+ 
+    .summary { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 10px; 
+      margin-bottom: 14px; 
+    } 
+ 
+    .mini { 
+      background: rgba(15,23,42,.65); 
+      border: 1px solid var(--border); 
+      border-radius: 16px; 
+      padding: 12px; 
+      text-align: center; 
+    } 
+ 
+    .mini strong { 
+      display: block; 
+      font-size: 24px; 
+    } 
+ 
+    .mini span { 
+      color: var(--muted); 
+      font-size: 12px; 
+    } 
+ 
+    .report-list { 
+      display: grid; 
+      gap: 10px; 
+    } 
+ 
+    .report-item { 
+      background: rgba(15,23,42,.66); 
+      border: 1px solid var(--border); 
+      border-radius: 18px; 
+      padding: 14px; 
+    } 
+ 
+    .report-top { 
+      display: flex; 
+      justify-content: space-between; 
+      gap: 10px; 
+      align-items: center; 
+      margin-bottom: 8px; 
+    } 
+ 
+    .badge { 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 7px 11px; 
+      border-radius: 999px; 
+      font-weight: 900; 
+      font-size: 13px; 
+      background: rgba(56,189,248,.16); 
+      color: #bae6fd; 
+      border: 1px solid rgba(56,189,248,.28); 
+    } 
+ 
+    .date { 
+      color: var(--muted); 
+      font-size: 13px; 
+      text-align: right; 
+    } 
+ 
+    .answers { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 8px; 
+      margin-top: 8px; 
+    } 
+ 
+    .answer { 
+      padding: 10px; 
+      border-radius: 14px; 
+      background: rgba(255,255,255,.06); 
+      font-size: 14px; 
+    } 
+ 
+    .answer b { 
+      display: block; 
+      color: var(--muted); 
+      font-size: 12px; 
+      margin-bottom: 4px; 
+    } 
+ 
+    .yesText { color: #86efac; font-weight: 900; } 
+    .noText { color: #fca5a5; font-weight: 900; } 
+ 
+    .hidden { 
+      display: none; 
+    } 
+ 
+    @media (max-width: 650px) { 
+      body { padding: 12px; } 
+      .config-grid, .summary, .answers { 
+        grid-template-columns: 1fr; 
+      } 
+ 
+      .btn-grid { 
+        grid-template-columns: 1fr; 
+      } 
+ 
+      .card { 
+        padding: 15px; 
+      } 
+    } 
+  </style>
+				</head>
+				<body>
+					<div class="app">
+						<div class="header">
+							<h1>Reporte Ruperto / Ruperta</h1>
+							<p>Registro con fecha y hora, guardado en GitHub JSON usando token manual.</p>
+						</div>
+						<section class="card">
+							<h2 style="margin-top:0;">Configuración GitHub</h2>
+							<div class="config-grid">
+								<div>
+									<label>Owner / usuario GitHub</label>
+									<input id="owner" value="CatalogosHN" />
+								</div>
+								<div>
+									<label>Repositorio</label>
+									<input id="repo" value="SeguimientoTrackings" />
+								</div>
+								<div>
+									<label>Rama</label>
+									<input id="branch" value="main" />
+								</div>
+								<div>
+									<label>Archivo JSON donde se guardará</label>
+									<input id="path" value="data/reporte-ruperto.json" />
+								</div>
+							</div>
+							<div class="token-row">
+								<label>Token GitHub, manual y no guardado</label>
+								<input id="token" type="password" placeholder="Pega aquí tu token solo cuando vayas a guardar o actualizar" autocomplete="off" />
+							</div>
+							<div class="warning"> 
+        El token debe tener permiso de 
+								<b>Contents: Read and Write</b> para este repositorio. 
+        Este HTML no usa localStorage ni guarda el token. 
+      
+							</div>
+							<button class="btn-secondary" onclick="loadReport()">Actualizar reporte desde GitHub</button>
+						</section>
+						<section class="card" id="formCard">
+							<div id="stepPerson">
+								<div class="question">¿Eres Ruperto o Ruperta?</div>
+								<div class="btn-grid">
+									<button class="btn-person" onclick="choosePerson('Ruperto', this)">Ruperto</button>
+									<button class="btn-person" onclick="choosePerson('Ruperta', this)">Ruperta</button>
+								</div>
+							</div>
+							<div id="stepQuestions" class="hidden">
+								<div class="question" id="personTitle">Responde las preguntas</div>
+								<label style="font-size:16px;color:white;font-weight:900;">¿Ya te bañaste?</label>
+								<div class="btn-grid">
+									<button class="btn-yes" onclick="chooseAnswer('banaste', 'Sí', this)">Sí</button>
+									<button class="btn-no" onclick="chooseAnswer('banaste', 'No', this)">No</button>
+								</div>
+								<label style="font-size:16px;color:white;font-weight:900;">¿Ya pisaste?</label>
+								<div class="btn-grid">
+									<button class="btn-yes" onclick="chooseAnswer('pisaste', 'Sí', this)">Sí</button>
+									<button class="btn-no" onclick="chooseAnswer('pisaste', 'No', this)">No</button>
+								</div>
+								<button class="btn-main" id="saveBtn" onclick="saveReport()" disabled> 
+          Guardar reporte 
+        </button>
+								<button class="btn-secondary" onclick="resetForm()"> 
+          Reiniciar preguntas 
+        </button>
+							</div>
+							<div id="status" class="status"></div>
+						</section>
+						<section class="card">
+							<h2 style="margin-top:0;">Reporte guardado</h2>
+							<div class="summary">
+								<div class="mini">
+									<strong id="totalCount">0</strong>
+									<span>Total registros</span>
+								</div>
+								<div class="mini">
+									<strong id="rupertoCount">0</strong>
+									<span>Ruperto</span>
+								</div>
+								<div class="mini">
+									<strong id="rupertaCount">0</strong>
+									<span>Ruperta</span>
+								</div>
+							</div>
+							<div class="config-grid" style="margin-bottom:12px;">
+								<div>
+									<label>Filtrar persona</label>
+									<select id="filterPerson" onchange="renderReport()">
+										<option value="Todos">Todos</option>
+										<option value="Ruperto">Ruperto</option>
+										<option value="Ruperta">Ruperta</option>
+									</select>
+								</div>
+								<div>
+									<label>Orden</label>
+									<select id="sortOrder" onchange="renderReport()">
+										<option value="new">Más recientes primero</option>
+										<option value="old">Más antiguos primero</option>
+									</select>
+								</div>
+							</div>
+							<div id="reportList" class="report-list"></div>
+						</section>
+					</div>
+					<script> 
+    let state = { 
+      persona: "", 
+      banaste: "", 
+      pisaste: "" 
+    }; 
+ 
+    let reportData = { 
+      updatedAt: "", 
+      registros: [] 
+    }; 
+ 
+    function getConfig() { 
+      return { 
+        owner: document.getElementById("owner").value.trim(), 
+        repo: document.getElementById("repo").value.trim(), 
+        branch: document.getElementById("branch").value.trim(), 
+        path: document.getElementById("path").value.trim(), 
+        token: document.getElementById("token").value.trim() 
+      }; 
+    } 
+ 
+    function showStatus(message, type = "") { 
+      const box = document.getElementById("status"); 
+      box.className = "status"; 
+      if (type) box.classList.add(type); 
+      box.textContent = message; 
+      box.style.display = "block"; 
+    } 
+ 
+    function clearStatus() { 
+      const box = document.getElementById("status"); 
+      box.style.display = "none"; 
+      box.textContent = ""; 
+      box.className = "status"; 
+    } 
+ 
+    function choosePerson(persona, btn) { 
+      state.persona = persona; 
+ 
+      document.querySelectorAll("#stepPerson button").forEach(b => b.classList.remove("selected")); 
+      btn.classList.add("selected"); 
+ 
+      document.getElementById("stepQuestions").classList.remove("hidden"); 
+      document.getElementById("personTitle").textContent = persona + ", responde las preguntas"; 
+ 
+      validateForm(); 
+    } 
+ 
+    function chooseAnswer(key, value, btn) { 
+      state[key] = value; 
+ 
+      const buttons = btn.parentElement.querySelectorAll("button"); 
+      buttons.forEach(b => b.classList.remove("selected")); 
+      btn.classList.add("selected"); 
+ 
+      validateForm(); 
+    } 
+ 
+    function validateForm() { 
+      const ok = state.persona && state.banaste && state.pisaste; 
+      document.getElementById("saveBtn").disabled = !ok; 
+    } 
+ 
+    function resetForm() { 
+      state = { 
+        persona: "", 
+        banaste: "", 
+        pisaste: "" 
+      }; 
+ 
+      document.querySelectorAll("button").forEach(b => b.classList.remove("selected")); 
+      document.getElementById("stepQuestions").classList.add("hidden"); 
+      document.getElementById("saveBtn").disabled = true; 
+      clearStatus(); 
+    } 
+ 
+    function formatHNDateTime(date = new Date()) { 
+      const fecha = new Intl.DateTimeFormat("es-HN", { 
+        timeZone: "America/Tegucigalpa", 
+        day: "2-digit", 
+        month: "2-digit", 
+        year: "numeric" 
+      }).format(date); 
+ 
+      const hora = new Intl.DateTimeFormat("es-HN", { 
+        timeZone: "America/Tegucigalpa", 
+        hour: "2-digit", 
+        minute: "2-digit", 
+        second: "2-digit", 
+        hour12: true 
+      }).format(date); 
+ 
+      return { fecha, hora }; 
+    } 
+ 
+    function utf8ToBase64(str) { 
+      const bytes = new TextEncoder().encode(str); 
+      let binary = ""; 
+      bytes.forEach(byte => binary += String.fromCharCode(byte)); 
+      return btoa(binary); 
+    } 
+ 
+    function base64ToUtf8(base64) { 
+      const binary = atob(base64.replace(/\n/g, "")); 
+      const bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); 
+      return new TextDecoder().decode(bytes); 
+    } 
+ 
+    async function githubGetFile() { 
+      const cfg = getConfig(); 
+ 
+      if (!cfg.owner || !cfg.repo || !cfg.branch || !cfg.path) { 
+        throw new Error("Completa owner, repo, branch y archivo JSON."); 
+      } 
+ 
+      const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponentPath(cfg.path)}?ref=${encodeURIComponent(cfg.branch)}`; 
+ 
+      const headers = { 
+        "Accept": "application/vnd.github+json" 
+      }; 
+ 
+      if (cfg.token) { 
+        headers["Authorization"] = `Bearer ${cfg.token}`; 
+      } 
+ 
+      const res = await fetch(url, { headers }); 
+ 
+      if (res.status === 404) { 
+        return { 
+          sha: null, 
+          data: { 
+            updatedAt: "", 
+            registros: [] 
+          } 
+        }; 
+      } 
+ 
+      if (!res.ok) { 
+        const text = await res.text(); 
+        throw new Error("No se pudo leer el archivo JSON. " + text); 
+      } 
+ 
+      const file = await res.json(); 
+ 
+      let parsed = { 
+        updatedAt: "", 
+        registros: [] 
+      }; 
+ 
+      if (file.content) { 
+        parsed = JSON.parse(base64ToUtf8(file.content)); 
+      } 
+ 
+      if (!Array.isArray(parsed.registros)) { 
+        parsed.registros = []; 
+      } 
+ 
+      return { 
+        sha: file.sha, 
+        data: parsed 
+      }; 
+    } 
+ 
+    async function githubPutFile(newData, sha) { 
+      const cfg = getConfig(); 
+ 
+      if (!cfg.token) { 
+        throw new Error("Debes escribir el token manualmente para poder guardar."); 
+      } 
+ 
+      const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponentPath(cfg.path)}`; 
+ 
+      const body = { 
+        message: "Actualizar reporte Ruperto/Ruperta", 
+        content: utf8ToBase64(JSON.stringify(newData, null, 2)), 
+        branch: cfg.branch 
+      }; 
+ 
+      if (sha) { 
+        body.sha = sha; 
+      } 
+ 
+      const res = await fetch(url, { 
+        method: "PUT", 
+        headers: { 
+          "Accept": "application/vnd.github+json", 
+          "Authorization": `Bearer ${cfg.token}`, 
+          "Content-Type": "application/json" 
+        }, 
+        body: JSON.stringify(body) 
+      }); 
+ 
+      if (!res.ok) { 
+        const text = await res.text(); 
+        throw new Error("No se pudo guardar en GitHub. " + text); 
+      } 
+ 
+      return await res.json(); 
+    } 
+ 
+    function encodeURIComponentPath(path) { 
+      return path 
+        .split("/") 
+        .map(part => encodeURIComponent(part)) 
+        .join("/"); 
+    } 
+ 
+    async function loadReport() { 
+      try { 
+        showStatus("Cargando reporte desde GitHub..."); 
+ 
+        const result = await githubGetFile(); 
+        reportData = result.data; 
+ 
+        renderReport(); 
+        showStatus("Reporte actualizado correctamente.", "ok"); 
+      } catch (err) { 
+        console.error(err); 
+        showStatus(err.message, "error"); 
+      } 
+    } 
+ 
+    async function saveReport() { 
+      try { 
+        const cfg = getConfig(); 
+ 
+        if (!cfg.token) { 
+          showStatus("Escribe el token manualmente antes de guardar.", "error"); 
+          return; 
+        } 
+ 
+        if (!state.persona || !state.banaste || !state.pisaste) { 
+          showStatus("Responde todas las preguntas antes de guardar.", "error"); 
+          return; 
+        } 
+ 
+        document.getElementById("saveBtn").disabled = true; 
+        showStatus("Guardando reporte en GitHub..."); 
+ 
+        const now = new Date(); 
+        const hn = formatHNDateTime(now); 
+ 
+        const nuevoRegistro = { 
+          id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), 
+          persona: state.persona, 
+          respuestas: { 
+            banaste: state.banaste, 
+            pisaste: state.pisaste 
+          }, 
+          fecha: hn.fecha, 
+          hora: hn.hora, 
+          zonaHoraria: "America/Tegucigalpa", 
+          creadoISO: now.toISOString() 
+        }; 
+ 
+        const current = await githubGetFile(); 
+ 
+        const newData = { 
+          updatedAt: now.toISOString(), 
+          registros: [ 
+            nuevoRegistro, 
+            ...(current.data.registros || []) 
+          ] 
+        }; 
+ 
+        await githubPutFile(newData, current.sha); 
+ 
+        reportData = newData; 
+        renderReport(); 
+        resetForm(); 
+        showStatus("Reporte guardado correctamente.", "ok"); 
+      } catch (err) { 
+        console.error(err); 
+        showStatus(err.message, "error"); 
+        validateForm(); 
+      } 
+    } 
+ 
+    function renderReport() { 
+      const list = document.getElementById("reportList"); 
+      const filter = document.getElementById("filterPerson").value; 
+      const order = document.getElementById("sortOrder").value; 
+ 
+      let registros = Array.isArray(reportData.registros) ? [...reportData.registros] : []; 
+ 
+      document.getElementById("totalCount").textContent = registros.length; 
+      document.getElementById("rupertoCount").textContent = registros.filter(r => r.persona === "Ruperto").length; 
+      document.getElementById("rupertaCount").textContent = registros.filter(r => r.persona === "Ruperta").length; 
+ 
+      if (filter !== "Todos") { 
+        registros = registros.filter(r => r.persona === filter); 
+      } 
+ 
+      registros.sort((a, b) => { 
+        const da = new Date(a.creadoISO || 0).getTime(); 
+        const db = new Date(b.creadoISO || 0).getTime(); 
+ 
+        return order === "new" ? db - da : da - db; 
+      }); 
+ 
+      if (registros.length === 0) { 
+        list.innerHTML = ` 
+          
+						<div class="report-item">
+							<div style="color:#94a3b8;text-align:center;"> 
+              No hay registros para mostrar. 
+            </div>
+						</div> 
+        `; 
+        return; 
+      } 
+ 
+      list.innerHTML = registros.map(r => { 
+        const banaste = r.respuestas?.banaste || "-"; 
+        const pisaste = r.respuestas?.pisaste || "-"; 
+ 
+        return ` 
+          
+						<div class="report-item">
+							<div class="report-top">
+								<div class="badge">${escapeHtml(r.persona || "-")}</div>
+								<div class="date"> 
+                ${escapeHtml(r.fecha || "-")}
+									<br> 
+                ${escapeHtml(r.hora || "-")} 
+              
+									</div>
+								</div>
+								<div class="answers">
+									<div class="answer">
+										<b>¿Ya te bañaste?</b>
+										<span class="${banaste === "Sí" ? "yesText" : "noText"}">${escapeHtml(banaste)}</span>
+									</div>
+									<div class="answer">
+										<b>¿Ya pisaste?</b>
+										<span class="${pisaste === "Sí" ? "yesText" : "noText"}">${escapeHtml(pisaste)}</span>
+									</div>
+								</div>
+							</div> 
+        `; 
+      }).join(""); 
+    } 
+ 
+    function escapeHtml(value) { 
+      return String(value) 
+        .replaceAll("&", "&amp;") 
+        .replaceAll("<", "&lt;") 
+        .replaceAll(">", "&gt;") 
+        .replaceAll('"', "&quot;") 
+        .replaceAll("'", "&#039;"); 
+    } 
+ 
+    renderReport(); 
+  
+						</script>
+					</body>
+				</html>
+			</p>
+		</body>
+	</html>
