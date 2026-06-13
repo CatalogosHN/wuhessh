@@ -1,6 +1,18 @@
 {
-  "updatedAt": "2026-05-21T08:51:17.967Z",
+  "updatedAt": "2026-06-13T02:28:25.998Z",
   "registros": [
+    {
+      "id": "4ba5c0cb-e644-4de6-8ebb-85a3f3794ed7",
+      "persona": "Ruperto",
+      "respuestas": {
+        "banaste": "Sí",
+        "pisaste": "No"
+      },
+      "fecha": "12/06/2026",
+      "hora": "08:28:25 p. m.",
+      "zonaHoraria": "America/Tegucigalpa",
+      "creadoISO": "2026-06-13T02:28:25.998Z"
+    },
     {
       "id": "d5af0ccb-620b-41e3-b5b5-7b82e391b4d8",
       "persona": "Ruperto",
